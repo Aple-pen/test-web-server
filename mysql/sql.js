@@ -1,4 +1,4 @@
 module.exports = {
-    customerList : `select * from customers`,
-    customerInsert : `insert into customers set ?`
+    usersList : `select * from users`,
+    usersInsert : `insert into users set ?`
 }

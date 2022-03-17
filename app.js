@@ -14,13 +14,13 @@ app.get("/",(req,res)=>{
 })
 
 app.get("/api/customers",async(req,res)=>{
-    const customers = await mysql.query("customerList")
+    const customers = await mysql.query("usersList")
     console.log(customers)
     res.send(customers)
 })
 
 app.post("/api/customer/insert",async(req,res)=>{
-    const result = await mysql.query('customerInsert',req.body.param);
+    const result = await mysql.query('usersInsert',req.body.param);
     console.log(result)
     res.send(result);
 })
