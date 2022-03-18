@@ -3,3 +3,4 @@ dist/*
 *.log
 # dotenv environment variables file
 .env
+uploads

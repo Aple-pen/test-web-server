@@ -42,7 +42,11 @@ app.post("/api/users/test",upload.single('file'),async(req,res)=>{
     console.log(req.file)
     console.log(req.filename)
     console.log(req)
-    res.send("test success")
+    res.json({
+        success: true,
+        image: res.req.file.path,
+        fileName: res.req.file.filename,
+    })
 })
 
 app.post("/api/users/edit",async(req,res)=>{
