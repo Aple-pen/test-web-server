@@ -9,13 +9,14 @@ app.use(express.urlencoded({extended :true,limit : '50mb',parameterLimit : 10000
 app.use(express.json({
     limit : '50mb'
 }))
+app.use('/uploads', express.static('uploads'));
 
 const storage = multer.diskStorage({
     destination : function(req,file,cb){
         cb(null,'uploads/')
     },
     filename : function(req,file,cb){
-        cb(null,new Date().valueOf() + file.originalname);
+        cb(null,new Date().valueOf() +"_"+ file.originalname);
     }
 })
 
@@ -40,6 +41,7 @@ app.post("/api/customer/insert",async(req,res)=>{
 app.post("/api/users/test",upload.single('file'),async(req,res)=>{
     console.log(req.file)
     console.log(req.filename)
+    console.log(req)
     res.send("test success")
 })
 
