@@ -3,11 +3,23 @@ require('dotenv').config({path:'mysql/.env'})
 const mysql = require("./mysql")
 const app = express();
 const PORT = 3000
+const multer = require("multer")
 
-app.use(express.urlencoded({extended : true}))
+app.use(express.urlencoded({extended :true,limit : '50mb',parameterLimit : 10000000}))
 app.use(express.json({
     limit : '50mb'
 }))
+
+const storage = multer.diskStorage({
+    destination : function(req,file,cb){
+        cb(null,'uploads/')
+    },
+    filename : function(req,file,cb){
+        cb(null,new Date().valueOf() + file.originalname);
+    }
+})
+
+const upload = multer({storage:storage})
 
 app.get("/",(req,res)=>{
     res.send('Hello World~')
@@ -23,6 +35,41 @@ app.post("/api/customer/insert",async(req,res)=>{
     const result = await mysql.query('usersInsert',req.body.param);
     console.log(result)
     res.send(result);
+})
+
+app.post("/api/users/test",upload.single('file'),async(req,res)=>{
+    console.log(req.file)
+    console.log(req.filename)
+    res.send("test success")
+})
+
+app.post("/api/users/edit",async(req,res)=>{
+    const value = req.body.param
+    const obj = {
+        id : "",
+        key : "",
+        value : ""
+    }
+
+    let sendArr = []
+    if(value.id){
+        obj.id = value.id
+        obj.key = Object.keys(value).filter(val=>val !== "id")[0]
+        obj.value = value[obj.key]
+
+        sendArr = [obj.value,obj.id]
+    }else{
+        res.send("id parameter require")
+    }
+    try{
+        const result = await mysql.query("userEditProfilePic",sendArr)
+        res.send("SUCCESS")
+        console.log(result)
+    }catch(e){
+        console.log(e)
+        res.send("FAIL")
+    }
+
 })
 
 app.listen(PORT,()=>{
