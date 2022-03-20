@@ -1,5 +1,7 @@
 const mysql = require("../mysql");
 const multer = require("multer");
+const {query} = require("../mysql");
+const {createHashedPassword} = require("../encryption/Encryption");
 const router = require("express").Router();
 
 const storage = multer.diskStorage({
@@ -12,6 +14,7 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({storage: storage})
+
 
 /**
  * 전체 사용자 검색
@@ -104,6 +107,11 @@ router.post("/picture", upload.single('file'), async (req, res) => {
 
 router.post("/register",async(req,res)=>{
     console.log(req.body)
+    const{mail,nickName,password,imgData} = req.body
+    const pass = await createHashedPassword(password)
+    console.log(pass.password)
+    const result = await mysql.query("usersInsert",[mail,nickName,pass.password,pass.salt,imgData])
     res.send("test")
+
 })
 module.exports = router
