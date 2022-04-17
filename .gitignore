@@ -2,5 +2,5 @@ node_modules
 dist/*
 *.log
 # dotenv environment variables file
-.env
+mysql/.env
 uploads
