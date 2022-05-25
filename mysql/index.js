@@ -11,6 +11,7 @@ const pool = mysql.createPool({
 })
 
 const query = async (alias, values) => {
+    console.log(process.env.MYSQL_PORT)
     return new Promise((resolve, reject) => pool.query(sql[alias], values, (error, results) => {
         if (error) {
             console.log("====================")

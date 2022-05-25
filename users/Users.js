@@ -13,7 +13,21 @@ const storage = multer.diskStorage({
     }
 })
 
+const mediaStorage = multer.diskStorage({
+    destination : (req,file,cb)=>{
+        cb(null,'uploads/media')
+    },
+    filename : function (req,file,cb){
+        cb(null,file.originalname + "|" + new Date().valueOf())
+    }
+})
+
+//사진 업로드
 const upload = multer({storage: storage})
+
+
+//음원 미디어 업로드
+const uploadMedia = multer({storage: storage})
 
 
 /**
@@ -111,7 +125,21 @@ router.post("/register",async(req,res)=>{
     const pass = await createHashedPassword(password)
     console.log(pass.password)
     const result = await mysql.query("usersInsert",[mail,nickName,pass.password,pass.salt,imgData])
+    console.log(result)
     res.send("test")
 
+})
+
+// router.post("/media",upload.single("file"),async(req,res)=>{
+//     console.log(req.file)
+//     console.log(req.filename)
+//
+//     res.send("success")
+//
+// })
+
+router.post("/media",async(req,res)=>{
+    console.log(req)
+    res.send("TEST")
 })
 module.exports = router
