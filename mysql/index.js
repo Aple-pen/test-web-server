@@ -3,7 +3,7 @@ const sql = require("./sql.js")
 
 const pool = mysql.createPool({
     connectionLimit: process.env.MYSQL_LIMIT,
-    host: process.env.MYSQL_HOST,
+    host: "182.217.18.194",
     port: process.env.MYSQL_PORT,
     user: process.env.MYSQL_USERNAME,
     password: process.env.MYSQL_PASSWORD,
