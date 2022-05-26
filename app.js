@@ -2,7 +2,7 @@ const express = require("express")
 require('dotenv').config({path:'mysql/.env'})
 const mysql = require("./mysql")
 const app = express();
-const PORT = 3000
+const PORT = 3002
 const multer = require("multer")
 const cors = require("cors")
 
@@ -26,5 +26,5 @@ app.use("/api/users",users)
 
 
 app.listen(PORT,()=>{
-    console.log("server running~")
+    console.log("server running~" , PORT)
 })
