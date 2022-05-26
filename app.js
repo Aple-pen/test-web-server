@@ -2,7 +2,7 @@ const express = require("express")
 require('dotenv').config({path:'mysql/.env'})
 const mysql = require("./mysql")
 const app = express();
-const PORT = 3002
+const PORT = 8081
 const multer = require("multer")
 const cors = require("cors")
 
@@ -18,6 +18,7 @@ app.use( cors({
 
 app.get("/",(req,res)=>{
     res.send('Hello World~')
+
 })
 
 const users = require("./users/Users")
