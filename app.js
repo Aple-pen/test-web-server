@@ -17,7 +17,7 @@ app.use( cors({
 }),)
 
 app.get("/",(req,res)=>{
-		console.log("안녕하세요");
+		console.log("안녕하세요!!!");
     res.send('Hello World~')
 	
 })
